@@ -3,6 +3,7 @@ package com.lab.lab5.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.lab.lab5.model.Coffee;
 import com.lab.lab5.value_object.AddCoffeeRequest;
 import com.lab.lab5.value_object.AddCoffeeRespose;
+import com.lab.lab5.value_object.DeleteCoffeeResponse;
 import com.lab.lab5.value_object.UpdateCoffeRequest;
 import com.lab.lab5.value_object.UpdateCoffeeResponse;
 
@@ -33,9 +35,12 @@ public class CoffeeService {
     }
 
     public AddCoffeeRespose addCoffee(AddCoffeeRequest coffee) {
-        int maxindex = coffees.size() + 1;
+        int maxId = coffees.stream()
+                .mapToInt((c) -> c.getId())
+                .max()
+                .orElse(0) + 1;
 
-        coffees.add(new Coffee(maxindex, coffee.name(), coffee.price()));
+        coffees.add(new Coffee(maxId, coffee.name(), coffee.price()));
 
         return new AddCoffeeRespose(coffees);
     }
@@ -49,6 +54,23 @@ public class CoffeeService {
             }
         }
         return new UpdateCoffeeResponse(coffees);
+    }
+
+    public DeleteCoffeeResponse deleteCoffeeById(int id) {
+        int lengthBefore = coffees.size();
+
+
+        coffees = coffees.stream()
+                .filter(c -> c.getId() != id)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        boolean found = lengthBefore > coffees.size();
+
+        if (!found) {
+            return null;
+        }
+
+        return new DeleteCoffeeResponse(coffees);
     }
 
 }

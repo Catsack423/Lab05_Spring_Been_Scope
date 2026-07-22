@@ -3,6 +3,7 @@ package com.lab.lab5.Controller;
 import com.lab.lab5.model.*;
 import com.lab.lab5.value_object.AddCoffeeRequest;
 import com.lab.lab5.value_object.AddCoffeeRespose;
+import com.lab.lab5.value_object.DeleteCoffeeResponse;
 import com.lab.lab5.value_object.UpdateCoffeRequest;
 import com.lab.lab5.value_object.UpdateCoffeeResponse;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,4 +68,15 @@ public class CoffeController {
         return ResponseEntity.ok(res);
     }
 
+
+    @DeleteMapping("/coffees/{id}")
+    public ResponseEntity<DeleteCoffeeResponse> deleteCoffee(@Min(1) @PathVariable int id){
+        var res = coffee.deleteCoffeeById(id);
+
+        if (res == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(res);
+    }
 }
