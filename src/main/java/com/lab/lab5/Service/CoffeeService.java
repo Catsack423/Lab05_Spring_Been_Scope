@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.lab.lab5.model.Coffee;
 import com.lab.lab5.value_object.AddCoffeeRequest;
 import com.lab.lab5.value_object.AddCoffeeRespose;
+import com.lab.lab5.value_object.UpdateCoffeRequest;
+import com.lab.lab5.value_object.UpdateCoffeeResponse;
 
 @Service
 public class CoffeeService {
@@ -31,11 +33,22 @@ public class CoffeeService {
     }
 
     public AddCoffeeRespose addCoffee(AddCoffeeRequest coffee) {
-        int maxindex = coffees.size();
+        int maxindex = coffees.size() + 1;
 
         coffees.add(new Coffee(maxindex, coffee.name(), coffee.price()));
 
         return new AddCoffeeRespose(coffees);
+    }
+
+    public UpdateCoffeeResponse updateCoffeeById(int id, UpdateCoffeRequest request) {
+        for (Coffee item : coffees) {
+            if (item.getId() == id) {
+                item.setName(request.name());
+                item.setPrice(request.price());
+                break;
+            }
+        }
+        return new UpdateCoffeeResponse(coffees);
     }
 
 }
