@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.lab.lab5.model.Coffee;
@@ -50,10 +49,11 @@ public class CoffeeService {
             if (item.getId() == id) {
                 item.setName(request.name());
                 item.setPrice(request.price());
-                break;
+                return new UpdateCoffeeResponse(coffees);
             }
         }
-        return new UpdateCoffeeResponse(coffees);
+        return null;
+        
     }
 
     public DeleteCoffeeResponse deleteCoffeeById(int id) {

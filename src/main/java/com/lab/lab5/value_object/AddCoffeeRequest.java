@@ -1,7 +1,5 @@
 package com.lab.lab5.value_object;
 
-import org.jspecify.annotations.NonNull;
-
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
