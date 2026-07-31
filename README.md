@@ -179,3 +179,20 @@
 <div align="center">
   <img src="image/Delete%20Coffee.png" width="700" alt="Delete Coffee">
 </div>
+
+---
+
+## 💬 Questions
+
+1. **HTTP method แต่ละตัว (GET/POST/PUT/DELETE) ต่างกันอย่างไร ยกตัวอย่างจากโปรเจกต์ตัวเอง**
+   - **GET** ใช้ดึงข้อมูล (เช่น `GET /coffees` ดึงรายการกาแฟ), **POST** ใช้สร้างข้อมูลใหม่ (เช่น `POST /coffees` เพิ่มกาแฟ)
+   - **PUT** ใช้แก้ไขข้อมูลเดิม (เช่น `PUT /coffees/{id}` แก้ชื่อและราคากาแฟ), **DELETE** ใช้ลบข้อมูล (เช่น `DELETE /coffees/{id}` ลบกาแฟ)
+2. **ทำไมต้องแยก Controller กับ Service ออกจากกัน มีข้อดีอย่างไรถ้าโปรแกรมโตขึ้น**
+   - Controller มีหน้าที่จัดการแค่การรับส่ง HTTP Request/Response ส่วน Service ใช้ประมวลผล Business Logic
+   - เมื่อโปรแกรมโตขึ้น การแยกส่วนจะช่วยให้อ่านโค้ดง่ายขึ้น แก้ไขบั๊กง่าย ทดสอบง่าย และสามารถนำ Service ไปเรียกใช้ซ้ำได้
+3. **ข้อมูลที่เก็บไว้ใน List ใน memory หายไปตอนไหน และถ้าอยากให้ไม่หายควรทำอย่างไร**
+   - ข้อมูลใน Memory จะหายไปเมื่อโปรแกรมถูกปิด (Stop) หรือทำการรีสตาร์ท (Restart) เซิร์ฟเวอร์
+   - หากต้องการให้ข้อมูลอยู่ถาวร ควรเปลี่ยนไปบันทึกข้อมูลลงในฐานข้อมูลจริง (Database) เช่น MySQL หรือ PostgreSQL
+4. **@RestController, @GetMapping, @PostMapping, @PathVariable, @RequestBody แต่ละตัวทำหน้าที่อะไร**
+   - `@RestController` ระบุว่าคลาสนี้คือ API, `@GetMapping`/`@PostMapping` กำหนดให้รับ Request แบบ GET และ POST
+   - `@PathVariable` ใช้ดึงค่าตัวแปรจาก URL path ส่วน `@RequestBody` ใช้แปลงข้อมูล JSON ที่ส่งมาใน Body ให้เป็น Java Object
